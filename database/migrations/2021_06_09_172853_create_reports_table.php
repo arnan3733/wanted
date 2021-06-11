@@ -16,12 +16,13 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->string('divisions_id', 10)->nullable();
-            $table->string('wanted_number', 100);
+            $table->string('wanted_number', 100); //หมายจับเลขที่
             $table->string('accused_name', 300); //ชื่อผู้ถูกกล่าวหา
             $table->string('accused_id_card', 20)->nullale(); //บัตรประชาชนผู้ถูกกล่าวหา
             $table->string('allegates_id', 13)->nullable(); //รหัสประเภทข้อกล่าวหา
-            $tabel->string('court_office', 300)->nullable(); //ชื่อศาล
+            $table->string('court_office', 300)->nullable(); //ชื่อศาล
             $table->string('prosecutor_office', 300)->nullable(); //สำนักอัยการ
+            $table->date('date_issue')->nullable(); //วันออกหมาย
             $table->date('expiration_date')->nullable(); //วันขาดอายุความ
             $table->enum('expiration_type', ['นับระยะเวลา','ไม่นับระยะเวลา'])->nullable(); //ประเภทวันอายุความ
             $table->date('detect_date')->nullable(); //วันที่ประกาศสืบจับ

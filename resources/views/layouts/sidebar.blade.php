@@ -14,16 +14,22 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item active ">
+                <li class="sidebar-item {{ $activeMenu == 'home' ? 'active' : '' }}">
                     <a href="{{ route('home.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item  ">
+                <li class="sidebar-item {{ $activeMenu == 'wanted' ? 'active' : '' }}">
+                    <a href="{{ route('wanted.index') }}" class='sidebar-link'>
+                        <i class="bi bi-pen-fill"></i>
+                        <span>รายงานหมายจับ</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ $activeMenu == 'division' ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-pen-fill"></i>
-                        <span>บันทึกรายงาน</span>
+                        <span>สำนัก/กอง</span>
                     </a>
                 </li>
 

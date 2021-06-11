@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Allegate extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'allegates_id',
+        'allegates_name',
+        'allegates_detail'
+    ];
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['activeMenu'=>'home'])
 
 @section('title', 'ยินดีต้อนรับสู่ระบบรายงานหมายจับ')
 
