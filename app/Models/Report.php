@@ -32,4 +32,18 @@ class Report extends Model
         'authority_contact',
         'attachment_file',
     ];
+
+    public function allegate(){
+        return $this->hasOne(Allegate::class, 'allegates_id', 'allegates_id');
+    }
+
+    /**
+     * Get the user associated with the Report
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function division()
+    {
+        return $this->hasOne(Division::class, 'divisions_id', 'divisions_id');
+    }
 }

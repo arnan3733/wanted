@@ -14,4 +14,9 @@ class Allegate extends Model
         'allegates_name',
         'allegates_detail'
     ];
+
+    public function report(){
+        return $this->belongsTo(Report::class);
+    }
+
 }

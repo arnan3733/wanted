@@ -18,8 +18,12 @@ class WantedController extends Controller
      */
     public function index()
     {
-        //
-        return view('wanted.index');
+        //Table with Related
+        $reports = Report::with('allegate')->with('division')->get();
+
+        //Table
+        // $reports = Report::all();
+        return view('wanted.index', compact('reports'));
     }
 
     /**
@@ -104,6 +108,10 @@ class WantedController extends Controller
     public function edit($id)
     {
         //
+        $report = Report::findOrFail($id);
+        $allegates = Allegate::all();
+        $divisions = Division::all();
+        return view('wanted.edit', compact('report', 'allegates', 'divisions'));
     }
 
     /**

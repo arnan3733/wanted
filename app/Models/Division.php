@@ -14,4 +14,14 @@ class Division extends Model
         'divisions_name',
         'divisions_shortname'
     ];
+
+    /**
+     * Get the user that owns the Division
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function report()
+    {
+        return $this->belongsTo(Report::class, 'divisions_id', 'divisions_id');
+    }
 }

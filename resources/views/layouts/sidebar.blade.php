@@ -32,6 +32,12 @@
                         <span>สำนัก/กอง</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ $activeMenu == 'allegate' ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-pen-fill"></i>
+                        <span>ข้อกล่าวหา</span>
+                    </a>
+                </li>
 
                 {{-- <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
