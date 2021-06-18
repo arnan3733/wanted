@@ -65,8 +65,9 @@
                         <h4 class="card-title">ฟอร์มแก้ไขข้อมูลรายงานหมายจับ</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form form-horizontal" action="#" method="POST" enctype="multipart/form-data">
+                        <form class="form form-horizontal" action="{{ route('wanted.update', $report->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="_method" value="PATCH">
                             <div class="form-body">
                                 <div class="row">
 
@@ -170,9 +171,6 @@
                                                             {{ $division->divisions_name }}
                                                         </option>
                                                     @endforeach
-                                                    {{-- <option value="">กองปราบปรามการทุจริตในภาครัฐ 1</option>
-                                                    <option value="">กองปราบปรามการทุจริตในภาครัฐ 2</option>
-                                                    <option value="">กองปราบปรามการทุจริตในภาครัฐ 3</option> --}}
                                                 </select>
                                             </div>
                                         </div>
@@ -243,7 +241,7 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <div class="position-relative">
-                                                <input type="text" class="form-control" placeholder="ข้อมูลติดต่อผู้รับผิดชอบ" name="authority_contact" required {{ $report->authority_contact }}>
+                                                <input type="text" class="form-control" placeholder="ข้อมูลติดต่อผู้รับผิดชอบ" name="authority_contact" required  value="{{ $report->authority_contact }}">
                                             </div>
                                         </div>
                                     </div>
@@ -257,6 +255,13 @@
                                             <div class="position-relative">
                                                 <input class="form-control form-control-sm" name="filename[]" type="file">
                                             </div>
+                                            <br>
+                                            @if ($report->attachment_file <> "ยังไม่ได้อัพโหลดไฟล์")
+                                                <a href="{{ asset('storage/'.$report->attachment_file) }}" target="_blank">คลิกเพื่อดูไฟล์</a>
+                                            @else
+                                                {{ $report->attachment_file }}
+                                            @endif
+
                                         </div>
                                     </div>
                                     

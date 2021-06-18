@@ -16,6 +16,14 @@
             </div>
         </div>
     </div>
+@elseif(Session::has('delete'))
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                {{ Session::get('delete') }}
+            </div>
+        </div>
+    </div>
 @endif
 
 <div class="page-heading">
@@ -55,6 +63,7 @@
                                     <th>เรื่องที่ถูกกล่าวหา</th>
                                     <th>ผู้รับผิดชอบ</th>
                                     <th>หน่วยงานที่รับผิดชอบ</th>
+                                    <th>ไฟล์แนบ</th>
                                     <th>การจัดการ</th>
                                 </tr>
                             </thead>
@@ -68,8 +77,55 @@
                                         <td>{{ $report->authority_name }}</td>
                                         <td>{{ $report->division->divisions_name }}</td>
                                         <td>
+                                            @if ($report->attachment_file <> "ยังไม่ได้อัพโหลดไฟล์")
+                                                <a href="{{ asset('storage/'.$report->attachment_file) }}" target="_blank">คลิกเพื่อดูไฟล์</a>
+                                            @else
+                                                {{ $report->attachment_file }}
+                                            @endif
+                                        </td>
+                                        <td>
+
                                             <a href="{{ route('wanted.edit', $report->id) }}" class="btn btn-warning">อัพเดทข้อมูล</a>
-                                            <a href="#" class="btn btn-danger">ลบข้อมูล</a>
+
+                                            <button type="button" class="btn btn-outline-danger block"
+                                                data-bs-toggle="modal" data-bs-target="#border-less_{{ $report->id }}">
+                                                ลบข้อมูล
+                                            </button>
+
+                                            <div class="modal fade text-left modal-borderless" id="border-less_{{ $report->id }}"
+                                            tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">ลบข้อมูลหมายเลขคดี {{ $report->case_id }}</h5>
+                                                        <button type="button" class="close rounded-pill"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"> คุณต้องการลบข้อมูลนี้ใช่หรือไม่ ?</div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light-primary"
+                                                            data-bs-dismiss="modal">
+                                                            <i class="bx bx-x d-block d-sm-none"></i>
+                                                            <span class="d-none d-sm-block">ยกเลิก</span>
+                                                        </button>
+                                                        {{-- <button type="button" class="btn btn-danger ml-1"
+                                                            data-bs-dismiss="modal">
+                                                            <i class="bx bx-check d-block d-sm-none"></i>
+                                                            <span class="d-none d-sm-block">ยืนยัน</span>
+                                                        </button> --}}
+                                                        <form action="{{ route('wanted.destroy', $report->id) }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <button type="submit" class="btn btn-danger">ลบข้อมูล</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

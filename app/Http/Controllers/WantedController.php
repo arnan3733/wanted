@@ -124,6 +124,42 @@ class WantedController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $report = Report::findOrFail($id);
+        // $report = Report::where('news_type', $news_type)->where('status', 'enable')->count();
+
+        // $sql = "Select * from content_table where `news_type` = {$news_type} and `status` = 'enable' ";
+        // $query = mysqli_query($sql);
+        // $row = mysqli_rows($query);
+        if($request->hasFile('filename')){
+            $rawfilename = $request->file('filename');
+            foreach($rawfilename as $value){
+                $filename = $value->store('upload/wanteds/', 'public');
+            }
+            if($report->attachment_file <> 'ยังไม่ได้อัพโหลดไฟล์'){
+                Storage::disk('public')->delete($report->attachment_file);
+            }
+        } else {
+            $filename = 'ยังไม่ได้อัพโหลดไฟล์';
+        }
+        
+        $report->divisions_id = $request->get('divisions_id');
+        $report->wanted_number = $request->get('wanted_number');
+        $report->accused_name = $request->get('accused_name');
+        $report->accused_id_card = $request->get('accused_id_card');
+        $report->allegates_id = $request->get('allegates_id');
+        $report->court_office = $request->get('court_office');
+        $report->prosecutor_office = $request->get('prosecutor_office');
+        $report->date_issue = $request->get('date_issue');
+        $report->expiration_date = $request->get('expiration_date');
+        $report->expiration_type = $request->get('expiration_type');
+        $report->case_id = $request->get('case_id');
+        $report->assignment_number = $request->get('assignment_number');
+        $report->authority_name = $request->get('authority_name');
+        $report->authority_contact = $request->get('authority_contact');
+        $report->attachment_file = $filename;
+
+        $report->save();
+        return redirect()->route('wanted.index')->with('success', 'ทำการอัพเดทข้อมูลเรียบร้อยแล้ว');
     }
 
     /**
@@ -135,5 +171,14 @@ class WantedController extends Controller
     public function destroy($id)
     {
         //
+        $report = Report::findOrFail($id);
+
+        if($report->attachment_file <> 'ยังไม่ได้อัพโหลดไฟล์'){
+            Storage::disk('public')->delete($report->attachment_file);
+        }
+
+        $report->delete();
+        
+        return redirect()->route('wanted.index')->with('delete', 'ทำการลบข้อมูลเรียบร้อยแล้ว');
     }
 }

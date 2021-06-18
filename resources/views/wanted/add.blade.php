@@ -3,6 +3,7 @@
 @section('title', 'บันทึกรายงานหมายจับ')
 
 @push('css')
+{{-- <link rel="stylesheet" href="//getbootstrap.com/2.3.2/assets/css/bootstrap.css"> --}}
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
     .gj-textbox-md{
@@ -87,7 +88,7 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <div class="position-relative">
-                                                <input type="text" class="form-control" placeholder="วันออกหมาย" name="date_issue" id="date_issue" required>
+                                                <input type="text" class="form-control" placeholder="วันออกหมาย" name="date_issue" id="date_issue" autocomplete="off" required>
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +179,7 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <div class="position-relative">
-                                                <input type="text" class="form-control" id="expiration_date" placeholder="วันขาดอายุความ" name="expiration_date" required>
+                                                <input type="text" class="form-control" id="expiration_date" placeholder="วันขาดอายุความ" name="expiration_date" autocomplete="off" required >
                                             </div>
                                         </div>
                                     </div>
@@ -277,10 +278,16 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <script>
         $('#date_issue').datepicker({
-            format: 'yyyy-mm-dd'
+            language:'th-th',
+            format:'yyyy-mm-dd'
         });
         $('#expiration_date').datepicker({
-            format: 'yyyy-mm-dd'
+            language:'th-th',
+            format:'yyyy-mm-dd'
         });
     </script>
+    {{-- <script src="//getbootstrap.com/2.3.2/assets/js/jquery.js"></script>
+    <script src="{{ asset('assets') }}/vendors/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="{{ asset('assets') }}/vendors/bootstrap-datepicker/bootstrap-datepicker-thai.js"></script>
+    <script src="{{ asset('assets') }}/vendors/bootstrap-datepicker/locales/bootstrap-datepicker.th.js"></script> --}}
 @endpush

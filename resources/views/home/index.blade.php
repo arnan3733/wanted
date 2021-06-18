@@ -48,8 +48,8 @@
                                         <tbody>
                                             <tr>
                                                 <td>จำนวนคดี</td>
-                                                <td>999</td>
-                                                <td>999</td>
+                                                <td>{{ $total_report }}</td>
+                                                <td>{{ $total_detect }}</td>
                                                 <td>999</td>
                                                 <td>999</td>
                                             </tr>
@@ -82,7 +82,6 @@
                                 <canvas id="bar"></canvas>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -104,8 +103,20 @@
 
         @push('js')
             <script src="{{ asset('assets') }}/vendors/chartjs/Chart.min.js"></script>
-            {{-- <script src="{{ asset('assets') }}/js/pages/ui-chartjs.js"></script> --}}
             <script>
+
+                var chartColors = {
+                    red: 'rgb(255, 99, 132)',
+                    orange: 'rgb(255, 159, 64)',
+                    yellow: 'rgb(255, 205, 86)',
+                    green: 'rgb(75, 192, 192)',
+                    info: '#41B1F9',
+                    blue: '#3245D1',
+                    purple: 'rgb(153, 102, 255)',
+                    grey: '#EBEFF6'
+                };
+
+                // กราฟสำหรับเรื่องที่ถูกกล่าวหา
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'doughnut',
@@ -113,7 +124,7 @@
                         labels: {!! $allegate_name !!},
                         datasets: [{
                             label: 'ประเภทข้อมูลหมายจับ',
-                            data: {!! $report !!},
+                            data: {!! $report1 !!},
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.9)',
                                 'rgba(54, 162, 235, 0.9)',
@@ -141,6 +152,50 @@
                         }
                     }
                 });
+
+                // กราฟสำหรับสำนัก
+                var ctxBar = document.getElementById("bar").getContext("2d");
+                var myBar = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: {!! $division_name !!},
+                        datasets: [{
+                            label: 'หมายจับที่รับผิดชอบ',
+                            backgroundColor: [chartColors.grey, chartColors.info, chartColors.blue, chartColors.grey, chartColors.info, chartColors.blue, chartColors.grey],
+                            data: {!! $report2 !!}
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        barRoundness: 1,
+                        title: {
+                            display: true,
+                            text: "สำนัก/กองที่รับผิดชอบหมายจับ"
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    suggestedMax: 9,
+                                    padding: 10,
+                                },
+                                gridLines: {
+                                    drawBorder: false,
+                                }
+                            }],
+                            xAxes: [{
+                                gridLines: {
+                                    display: false,
+                                    drawBorder: false
+                                }
+                            }]
+                        }
+                    }
+                });
+                
             </script>
 
         @endpush
