@@ -10,6 +10,10 @@ use App\Models\Division;
 class HomeController extends Controller
 {
     //
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function index(){
 
         $allegates = Allegate::all('allegates_id', 'allegates_name');
